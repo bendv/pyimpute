@@ -228,12 +228,12 @@ def impute(target_xs, clf, raster_info, outdir="output", linechunk=1000, class_p
                 classcert2D = proba_class.reshape((linechunk, shape[1])).astype('float32')
                 class_ds.write_band(1, classcert2D, window=window)
 
-    finally:
-        response_ds.close()
-        if certainty:
-            certainty_ds.close()
-        for class_ds in class_dss:
-            class_ds.close()
+#    finally:
+#        response_ds.close()
+#        if certainty:
+#            certainty_ds.close()
+#        for class_ds in class_dss:
+#            class_ds.close()
 
 
 def stratified_sample_raster(strata_data, target_sample_size=30, min_sample_proportion=0.1):
