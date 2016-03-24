@@ -210,7 +210,7 @@ def impute(target_xs, clf, raster_info, outdir="output", linechunk=1000, class_p
 
             # Predict
             responses = clf.predict(line)
-            responses2D = responses.reshape((linechunk, shape[1])).astype('int16')
+            responses2D = responses.reshape((linechunk, shape[1]))
             response_ds.write_band(1, responses2D, window=window)
 
             if certainty or class_prob:
