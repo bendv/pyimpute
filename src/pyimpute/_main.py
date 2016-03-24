@@ -166,7 +166,7 @@ def impute(target_xs, clf, raster_info, outdir="output", linechunk=1000, class_p
         'count': 1,
         'crs': raster_info['crs'],
         'driver': u'GTiff',
-        'dtype': 'int16',
+#       'dtype': 'int16',
         'nodata': -32768,
         'tiled': False,
         'transform': raster_info['affine'].to_gdal(),
