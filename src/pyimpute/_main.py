@@ -100,6 +100,8 @@ def load_targets(explanatory_rasters):
     aff = None
     shape = None
     crs = None
+    dtype = None
+    nodata = None
 
     for raster in explanatory_rasters:
         logger.debug(raster)
@@ -123,7 +125,19 @@ def load_targets(explanatory_rasters):
                 crs = src.crs
             else:
                 assert crs == src.crs
-
+                
+            # Save or check the nodatavalue
+            if not nodata:
+                nodata = src.nodata
+            else:
+                assert nodata == src.nodata
+                
+            # Save or check the data type
+            if not dtype:
+                dtype = src.dtype
+            else:
+                assert dtype == src.dtype
+                
         # Flatten in one dimension
         arf = ar.flatten()
         explanatory_raster_arrays.append(arf)
@@ -133,7 +147,9 @@ def load_targets(explanatory_rasters):
     raster_info = {
         'affine': aff,
         'shape': shape,
-        'crs': crs
+        'crs': crs,
+        'nodata': nodata,
+        'dtype': dtype
     }
     return expl, raster_info
 
@@ -166,8 +182,8 @@ def impute(target_xs, clf, raster_info, outdir="output", linechunk=1000, class_p
         'count': 1,
         'crs': raster_info['crs'],
         'driver': u'GTiff',
-#       'dtype': 'int16',
-        'nodata': -32768,
+        'dtype': raster_info['dtype'],
+        'nodata': raster_info['nodata'],
         'tiled': False,
         'transform': raster_info['affine'].to_gdal(),
         'width': shape[1]}
