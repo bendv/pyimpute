@@ -228,7 +228,8 @@ def impute(target_xs, clf, raster_info, outdir="output", linechunk=1000, class_p
                 classcert2D = proba_class.reshape((linechunk, shape[1])).astype('float32')
                 class_ds.write_band(1, classcert2D, window=window)
 
-#    finally:
+    finally:
+        pass
 #        response_ds.close()
 #        if certainty:
 #            certainty_ds.close()
